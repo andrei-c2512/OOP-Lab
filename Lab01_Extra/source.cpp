@@ -28,6 +28,7 @@ int main()
 		for (const char& ch : input)
 		{
 			int idx = int(ch) - 42;
+            std::cout << idx << '\n';
 			if( idx >= 0 && idx < (int)OPERATION::COUNT)
 			{
 				const auto& content = caseArr[idx];
