@@ -74,15 +74,16 @@ std::function<bool(int , int)> Sort::comparisonOp(bool ascendent){
 
 void Sort::InsertSort(bool ascendent){ 
     auto cmp = comparisonOp(ascendent);
-
+    std::cout << _size << '\n';
     for(int i = 0 ; i < _size ; i++){
         int tmp = _pList[i];
         int j = i - 1;
-        while(j >= 0 && cmp(tmp, _pList[i]))
+        while(j >= 0 && cmp(tmp, _pList[j]))
         {
             _pList[j + 1] = _pList[j];
             j--;
         }
+        j++;
         _pList[j] = tmp;
     }
 }
@@ -99,39 +100,39 @@ void Sort::QuickSort(bool ascendent){
         std::swap(_pList[pivot] , _pList[right]);
         right--;
         while(left <= right){
-            while(right >= interval.first && cmp(_pList[pivot],_pList[right]))
+            while(right >= interval.first && cmp(_pList[interval.second],_pList[right]))
                 right--;
-            while(left < interval.second  && !cmp(_pList[pivot] , _pList[left]);
-                left++;
-            
-            std::swap(_pList[left] , _pList[right]);
+            while(left <= interval.second  && !cmp(_pList[interval.second] , _pList[left]))
+                left++;    
+            if(left < right)
+                std::swap(_pList[left] , _pList[right]);
         }
         std::swap(_pList[left] , _pList[interval.second]);
         if(left - 1 - interval.first > 1)
             intervalStack.emplace(interval.first , left - 1);
         if(interval.second - (left + 1) > 1)
-            intervalStack.emplace(interval.left + 1 , interval.second);
+            intervalStack.emplace(left + 1 , interval.second);
         
     }
 }
 void Sort::BubbleSort(bool ascendent){
-    if(_size > 2) return;
-   auto cmp = comparisonOp(ascendent);
-   bool go = false;
-  do{
+    if(_size < 2) return;
+    auto cmp = comparisonOp(ascendent);
+    bool go = false;
+    do{
       go = false;
       for(int i = 0 ; i < _size - 1; i++)
       {
-            if(!cmp(_pList[i] , _pList[i + 1])){
+            if(cmp(_pList[i] , _pList[i + 1])){
                 go = true;
                 std::swap(_pList[i] , _pList[i + 1]);
             }
       }
-  }while(go); 
+    }while(go); 
 }
 void Sort::Print() const{
     for(int i = 0 ; i < _size ; i++){
-        std::cout << _pList << ' ';
+        std::cout << _pList[i] << ' ';
     }
     std::cout << '\n';
 }
